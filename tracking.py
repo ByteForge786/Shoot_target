@@ -43,8 +43,13 @@ while True:
         # Black dot in the middle
         cv2.circle(img, (fx, fy), 5, (0, 0, 0), cv2.FILLED)
 
+        # Draw text "Aiming for kill" slightly below the target icon
+        text = "Aiming for kill"
+        text_size = cv2.getTextSize(text, cv2.FONT_HERSHEY_PLAIN, 2, 2)[0]
+        text_x = fx - text_size[0] // 2
+        text_y = fy + 50  # Adjusted y-coordinate to move the text down
+        cv2.putText(img, text, (text_x, text_y), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2)
         cv2.putText(img, str(pos), (fx + 15, fy - 15), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
-        cv2.putText(img, "TARGET LOCKED", (850, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
 
     else:
         # No face detected annotations
@@ -63,6 +68,10 @@ while True:
         # Black dot in the middle
         cv2.circle(img, (640, 360), 5, (0, 0, 0), cv2.FILLED)
 
+    # Resize display window to fit the laptop screen
+    cv2.namedWindow("Image", cv2.WINDOW_NORMAL)
+    cv2.setWindowProperty("Image", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+    
     # Show the image
     cv2.imshow("Image", img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
